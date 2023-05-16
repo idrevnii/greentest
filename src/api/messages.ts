@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { SendMessageArgs, SendMessageResponse } from './models'
 
-export async function sendMessageQuery({
+export async function sendMessage({
   chatId,
   message,
   credentials

@@ -1,4 +1,4 @@
-type Credentials = {
+export type Credentials = {
   idInstance: string
   apiTokenInstance: string
 }
@@ -23,6 +23,10 @@ export type ReceiveNotificationArgs = {
 export type ReceiveNotificationResponse = {
   receiptId: number
   body: {
+    typeWebhook:
+      | 'outgoingMessageStatus'
+      | 'incomingMessageReceived'
+      | 'outgoingAPIMessageReceived'
     messageData: TextNotification
   }
 }

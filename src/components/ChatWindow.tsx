@@ -2,21 +2,56 @@ import { useEffect, useState } from 'react'
 import ChatHead from './ChatHead'
 import Messages from './Messages'
 import SendMessage from './SendMessage'
-import { useQuery } from '@tanstack/react-query'
-import { fetchNotificationQuery } from '../api/notifications'
+import { fetchNotifications } from '../api/notifications'
+import { Credentials } from '../api/models'
+import { sendMessage } from '../api/messages'
 
-export default function ChatWindow() {
-  const [messages, setMessages] = useState<string[]>([])
-  const { data, isLoading, error } = useQuery({
-    queryKey: 'notifications',
-    queryFn: fetchNotificationQuery
-  })
+type Props = {
+  chatId: string
+  credentials: Credentials
+}
+
+export type Message = {
+  receiptId: number
+  owner: 'me' | 'companion'
+  text: string
+}
+
+export default function ChatWindow({ chatId, credentials }: Props) {
+  const [messages, setMessages] = useState<Message[]>([])
+
+  const getNotifications = () =>
+    fetchNotifications({ credentials }).then((data) => {
+      if (data) {
+        console.log('data', data)
+        console.log('messages', messages)
+        setMessages((messages) => [
+          ...messages,
+          ...data
+            .map<Message>(({ receiptId, text }) => ({
+              receiptId,
+              owner: 'companion',
+              text
+            }))
+            .filter(
+              (data) => !messages.some((el) => el.receiptId === data.receiptId)
+            )
+            .sort((a, b) => a.receiptId - b.receiptId)
+        ])
+      }
+    })
 
   useEffect(() => {
-    if (data) {
-      setMessages([...messages, ...data])
-    }
-  }, [messages, data])
+    setInterval(getNotifications, 5000)
+  }, [])
+
+  const sendMessageFn = (text: string) =>
+    sendMessage({ credentials, chatId, message: text }).then(() =>
+      setMessages((messages) => [
+        ...messages,
+        { receiptId: messages.length + 1, owner: 'me', text }
+      ])
+    )
 
   return (
     <div className="flex flex-col w-full">
@@ -29,14 +64,8 @@ export default function ChatWindow() {
           }
         />
       </div>
-      {isLoading ? (
-        <div className="h-full text-4xl">Loading...</div>
-      ) : error ? (
-        <div className="h-full text-4xl text-[#f00]">Error!</div>
-      ) : (
-        <Messages messages={messages} />
-      )}
-      <SendMessage />
+      <Messages messages={messages} />
+      <SendMessage sendMessage={sendMessageFn} />
     </div>
   )
 }

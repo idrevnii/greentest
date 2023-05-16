@@ -20,7 +20,7 @@ const chats = [
 
 export default function Chats() {
   return (
-    <>
+    <div className="bg-white h-full">
       <ChatSearch />
       <div className="flex flex-col">
         {chats.map(({ name, avatarUrl, lastMessage, lastTimeOnline }, ind) => (
@@ -33,6 +33,6 @@ export default function Chats() {
           />
         ))}
       </div>
-    </>
+    </div>
   )
 }

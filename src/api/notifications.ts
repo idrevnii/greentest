@@ -10,7 +10,7 @@ export async function receiveNotification({
   credentials
 }: ReceiveNotificationArgs) {
   const url = `https://api.green-api.com/waInstance${credentials.idInstance}/ReceiveNotification/${credentials.apiTokenInstance}`
-  return axios.get<ReceiveNotificationResponse>(url).then((r) => r.data)
+  return axios.get<ReceiveNotificationResponse | null>(url).then((r) => r.data)
 }
 
 export async function deleteNotification({
@@ -18,20 +18,36 @@ export async function deleteNotification({
   credentials
 }: DeleteNotificationArgs) {
   const url = `https://api.green-api.com/waInstance${credentials.idInstance}/DeleteNotification/${credentials.apiTokenInstance}/${receiptId}`
-  return axios.get<DeleteNotificationResponse>(url).then((r) => r.data)
+  return axios.delete<DeleteNotificationResponse>(url).then((r) => r.data)
 }
 
-export async function fetchNotificationQuery({
+export async function fetchNotifications({
   credentials
 }: ReceiveNotificationArgs) {
   const notifications = []
+  let isEnd = false
 
-  let result
-  do {
-    result = await receiveNotification({ credentials })
-    notifications.push(result.body.messageData.textMessageData.textMessage)
-    await deleteNotification({ receiptId: result.receiptId, credentials })
-  } while (result)
+  while (!isEnd) {
+    const result = await receiveNotification({ credentials })
+    console.log('resultNotification', result)
+    if (result) {
+      if (result.body.typeWebhook === 'incomingMessageReceived') {
+        notifications.push({
+          receiptId: result.receiptId,
+          text: result.body.messageData.textMessageData.textMessage
+        })
+      }
+      const response = await deleteNotification({
+        receiptId: result.receiptId,
+        credentials
+      })
+      console.log('deleteResponse', response)
+    } else {
+      isEnd = true
+    }
+  }
+
+  console.log('call', notifications)
 
   return notifications
 }

@@ -9,7 +9,6 @@ export default function StatusIcon() {
       id="ee51d023-7db6-4950-baf7-c34874b80976"
       x="0px"
       y="0px"
-      enable-background="new 0 0 24 24"
     >
       <path
         fill="currentColor"
