@@ -35,7 +35,7 @@ export default function ChatWindow({ activeChat, credentials }: Props) {
     })
 
   useEffect(() => {
-    setInterval(getNotifications, 1000)
+    setInterval(getNotifications, 3000)
   }, [])
 
   const sendMessageFn = (text: string) =>
@@ -48,7 +48,7 @@ export default function ChatWindow({ activeChat, credentials }: Props) {
     )
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full h-full">
       <div>
         <ChatHead
           name={activeChat.name}

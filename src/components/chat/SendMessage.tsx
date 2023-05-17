@@ -26,11 +26,11 @@ export default function SendMessage({ sendMessage }: Props) {
             <AttachmentIcon />
           </div>
         </div>
-        <form className="w-full outline-none">
+        <form className="h-full w-full outline-none">
           <input
             type="text"
             placeholder="Type a message"
-            className="bg-white rounded-lg px-4 outline-none border-0 w-full"
+            className="h-full bg-white rounded-lg px-4 outline-none border-0 w-full"
             value={text}
             onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => {

@@ -24,29 +24,30 @@ export async function deleteNotification({
 export async function fetchNotifications({
   credentials
 }: ReceiveNotificationArgs) {
-  const notifications = []
+  const notifications: { receiptId: number; text: string }[] = []
   let isEnd = false
 
   while (!isEnd) {
-    const result = await receiveNotification({ credentials })
-
-    if (result) {
-      if (
-        result.body.typeWebhook === 'incomingMessageReceived' &&
-        result.body.messageData.typeMessage === 'textMessage'
-      ) {
-        notifications.push({
+    isEnd = await receiveNotification({ credentials }).then(async (result) => {
+      if (result?.receiptId) {
+        if (
+          result.body.typeWebhook === 'incomingMessageReceived' &&
+          result.body.messageData.typeMessage === 'textMessage'
+        ) {
+          notifications.push({
+            receiptId: result.receiptId,
+            text: result.body.messageData.textMessageData.textMessage
+          })
+        }
+        await deleteNotification({
           receiptId: result.receiptId,
-          text: result.body.messageData.textMessageData.textMessage
+          credentials
         })
+        return true
+      } else {
+        return false
       }
-      await deleteNotification({
-        receiptId: result.receiptId,
-        credentials
-      })
-    } else {
-      isEnd = true
-    }
+    })
   }
 
   return notifications
