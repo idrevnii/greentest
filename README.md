@@ -2,7 +2,8 @@
 
 1. `git clone https://github.com/idrevnii/greentest`
 2. `yarn` или `npm install`
-3. Запуск `yarn serve` или `npm run serve`
+3. `yarn build` или `npm run build`
+4. Запуск `yarn serve` или `npm run serve`
 
 # Использование
 
