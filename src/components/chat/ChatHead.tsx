@@ -1,5 +1,5 @@
-import MenuIcon from '../assets/MenuIcon'
-import SearchIcon from '../assets/SearchIcon'
+import MenuIcon from '../../assets/MenuIcon'
+import SearchIcon from '../../assets/SearchIcon'
 
 type Props = {
   name: string

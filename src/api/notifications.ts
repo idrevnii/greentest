@@ -29,25 +29,25 @@ export async function fetchNotifications({
 
   while (!isEnd) {
     const result = await receiveNotification({ credentials })
-    console.log('resultNotification', result)
+
     if (result) {
-      if (result.body.typeWebhook === 'incomingMessageReceived') {
+      if (
+        result.body.typeWebhook === 'incomingMessageReceived' &&
+        result.body.messageData.typeMessage === 'textMessage'
+      ) {
         notifications.push({
           receiptId: result.receiptId,
           text: result.body.messageData.textMessageData.textMessage
         })
       }
-      const response = await deleteNotification({
+      await deleteNotification({
         receiptId: result.receiptId,
         credentials
       })
-      console.log('deleteResponse', response)
     } else {
       isEnd = true
     }
   }
-
-  console.log('call', notifications)
 
   return notifications
 }

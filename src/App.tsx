@@ -1,18 +1,39 @@
-import ChatWindow from './components/ChatWindow'
-import MainMenu from './components/MainMenu'
+import { useState } from 'react'
+import ChatWindow from './components/chat/ChatWindow'
+import MainMenu from './components/menu/MainMenu'
+import { Chat } from './components/models'
+import Auth from './components/Auth'
+
+type AuthData = {
+  idInstance: string
+  apiTokenInstance: string
+}
 
 function App() {
+  const [authData, setAuthData] = useState<AuthData>({
+    idInstance: '',
+    apiTokenInstance: ''
+  })
+
+  const [activeChat, setActiveChat] = useState<Chat>()
+
+  const changeAuthData = (idInstance: string, apiTokenInstance: string) =>
+    setAuthData({
+      idInstance,
+      apiTokenInstance
+    })
+
+  const changeActiveChat = (chat: Chat) => setActiveChat(chat)
+
   return (
-    <body className="h-full w-full bg-gray-50 flex">
-      <MainMenu />
-      <ChatWindow
-        chatId="77055041082@c.us"
-        credentials={{
-          idInstance: '1101820042',
-          apiTokenInstance: '12f2941ca04b4c82a9607cb42e081ff7c610ac5f0db04e6399'
-        }}
-      />
-    </body>
+    <div className="h-screen w-full bg-gray-50 flex justify-center items-center">
+      <MainMenu changeActiveChat={changeActiveChat} />
+      {activeChat ? (
+        <ChatWindow activeChat={activeChat} credentials={authData} />
+      ) : (
+        <Auth changeAuthData={changeAuthData} />
+      )}
+    </div>
   )
 }
 

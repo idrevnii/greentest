@@ -2,17 +2,19 @@ type Props = {
   name: string
   avatarUrl: string
   lastMessage: string
-  lastTimeOnline: string
+  lastSeen: string
+  onClick: () => void
 }
 
 export default function ChatPerson({
   name,
   avatarUrl,
   lastMessage,
-  lastTimeOnline
+  lastSeen,
+  onClick
 }: Props) {
   return (
-    <div className={'border-b border-waborder cursor-pointer'}>
+    <div className="border-b border-waborder cursor-pointer" onClick={onClick}>
       <div className="flex items-center w-full">
         <div className="p-3">
           <img
@@ -31,7 +33,7 @@ export default function ChatPerson({
             </p>
           </div>
           <p className="text-xs font-sans text-gray-500 font-light">
-            {lastTimeOnline}
+            {lastSeen}
           </p>
         </div>
       </div>

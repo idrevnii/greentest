@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import AttachmentIcon from '../assets/AttachmentIcon'
-import EmojiIcon from '../assets/EmojiIcon'
-import MicrophoneIcon from '../assets/MicrophoneIcon'
+import AttachmentIcon from '../../assets/AttachmentIcon'
+import EmojiIcon from '../../assets/EmojiIcon'
+import MicrophoneIcon from '../../assets/MicrophoneIcon'
 
 type Props = {
   sendMessage: (message: string) => void
@@ -11,8 +11,8 @@ export default function SendMessage({ sendMessage }: Props) {
   const [text, setText] = useState('')
 
   const onSubmit = () => {
-    console.log(text)
     sendMessage(text)
+    setText('')
   }
 
   return (

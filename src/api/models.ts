@@ -4,7 +4,7 @@ export type Credentials = {
 }
 
 type TextNotification = {
-  typeMessage: 'textMessage'
+  typeMessage: 'textMessage' | 'stickerMessage'
   textMessageData: {
     textMessage: string
     isTemplateMessage: boolean
