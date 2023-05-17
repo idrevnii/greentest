@@ -1,40 +1,11 @@
-# vite React TypeScript tailwindcss starter
+# Установка
 
-Template for vite, React + tailwindcss + TypeScript projects with some tools preconfigured.
+1. `git clone https://github.com/idrevnii/greentest`
+2. `yarn` или `npm install`
+3. Запуск `yarn serve` или `npm run serve`
 
-## About
+# Использование
 
-Template for vite, React + tailwindcss + TypeScript projects with some tools preconfigured.
-
-![Screenshot](assets/screenshot.png)
-
-### Libraries
-
-- [Jest 29](https://jestjs.io/)
-- [React 18](https://reactjs.org/)
-- [tailwindcss 3](https://tailwindcss.com/)
-  - [tailwindcss forms plugin](https://tailwindcss-forms.vercel.app/)
-- [TypeScript 4.9.5](https://www.typescriptlang.org/)
-- [vite 4](https://vitejs.dev/)
-
-### Tools
-
-- [commitlint 17](https://commitlint.js.org)
-- [Conventional Commits 1](https://www.conventionalcommits.org)
-- [editorconfig](https://editorconfig.org/)
-- [eslint 8](https://eslint.org/)
-- [husky 8](https://typicode.github.io/husky/#/)
-- [Prettier 2](https://prettier.io/)
-- [VS Code settings](https://code.visualstudio.com/)
-
-## Usage
-
-Create a new project from this template by clicking the "Use this template" button:
-
-![](assets/template-usage.png)
-
-```bash
-yarn
-yarn dev
-yarn test
-```
+1. Как только откроется приложение необходимо ввести idInstance и apiTokenInstance в соответствующие формы и нажать кнопку `Submit`.
+2. Написать в поле поиска номер абонента которому хотите написать и нажать `Enter`.
+3. Откроется чат в котором можно обмениваться сообщениями
