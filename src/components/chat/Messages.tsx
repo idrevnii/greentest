@@ -6,7 +6,7 @@ type Props = {
 
 export default function Messages({ messages }: Props) {
   return (
-    <div className="bg-texture h-full flex flex-col p-4">
+    <div className="bg-texture h-full flex flex-col p-4 overflow-auto">
       {messages.map((msg, ind) => {
         if (msg.owner === 'me') {
           return (
